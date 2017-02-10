@@ -10,11 +10,25 @@ const safeVariableName = (fileName) => {
   }
 };
 
+const translateFileName = (fileName) => {
+  const indexOfDash = fileName.indexOf('-');
+
+  if (indexOfDash === -1) {
+    return fileName;
+  }
+
+  return fileName.replace(/-([a-z])/g, (_match, letter) => {
+    return letter.toUpperCase();
+  }).replace(/-/g, '');
+};
+
 const buildExportBlock = (files) => {
   let importBlock;
 
   importBlock = _.map(files, (fileName) => {
-    return 'export { default as ' + safeVariableName(fileName) + ' } from \'./' + fileName + '\';';
+    const exportName = translateFileName(safeVariableName(fileName));
+
+    return 'export { default as ' + exportName + ' } from \'./' + fileName + '\';';
   });
 
   importBlock = importBlock.join('\n');

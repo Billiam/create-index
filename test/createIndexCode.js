@@ -56,4 +56,24 @@ export { default as foo } from './foo';
             `));
     });
   });
+  context('file with dashes', () => {
+    it('removes all dashes from the export statement', () => {
+      const indexCode = createIndexCode(['--f-o-o--.js']);
+
+      expect(indexCode).to.equal(codeExample(`
+// @create-index
+
+export { default as FOO } from './--f-o-o--.js';
+            `));
+    });
+    it('translates characters after dashes to uppercase', () => {
+      const indexCode = createIndexCode(['foo-BAR-baz.js']);
+      
+      expect(indexCode).to.equal(codeExample(`
+// @create-index
+
+export { default as fooBARBaz } from './foo-BAR-baz.js';
+            `));
+    });
+  });
 });
