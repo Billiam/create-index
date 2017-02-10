@@ -21,18 +21,12 @@ const hasNoExtension = (fileName) => {
   return !matches;
 };
 
-const hasMultipleExtensions = (fileName) => {
-  const matches = fileName.match(/\./g);
-
-  return matches && matches.length > 1;
-};
-
 const isSafeName = (fileName) => {
   return /^[a-z-][a-z0-9._-]+$/i.test(fileName);
 };
 
 const stripExtension = (fileName) => {
-  const pos = fileName.lastIndexOf('.');
+  const pos = fileName.indexOf('.');
 
   if (pos === -1) {
     return fileName;
@@ -73,10 +67,6 @@ export default (directoryPath, options = {}) => {
     }
 
     if (hasNoExtension(fileName) && !isDirectory) {
-      return false;
-    }
-
-    if (hasMultipleExtensions(fileName)) {
       return false;
     }
 

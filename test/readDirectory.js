@@ -96,10 +96,10 @@ describe('readDirectory()', () => {
     });
   });
   context('target directory contains files with multiple extensions', () => {
-    it('ignores files', () => {
+    it('includes files', () => {
       const names = readDirectory(path.resolve(fixturesPath, 'children-files-multiple-extensions'));
 
-      expect(names).to.deep.equal(['present.js']);
+      expect(names).to.deep.equal(['bar.bar.js', 'foo.foo.js', 'present.js']);
     });
   });
   context('target directory contains directories and files with the same name', () => {

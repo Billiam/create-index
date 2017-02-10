@@ -44,6 +44,17 @@ export { default as foo } from './foo.js';
             `));
     });
   });
+  context('file with multiple extensions', () => {
+    it('removes all extensions from the export statement', () => {
+      const indexCode = createIndexCode(['foo.foo.js']);
+
+      expect(indexCode).to.equal(codeExample(`
+// @create-index
+
+export { default as foo } from './foo.foo.js';
+            `));
+    });
+  }); 
   context('multiple, unsorted', () => {
     it('sorts the files', () => {
       const indexCode = createIndexCode(['foo', 'bar']);
